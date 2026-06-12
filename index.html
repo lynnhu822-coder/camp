@@ -54,24 +54,36 @@
 
   /* NAV */
   nav { position:fixed; top:36px; left:0; right:0; z-index:100; padding:24px 48px; display:flex; justify-content:flex-end; align-items:center; gap:16px; }
-  nav::before { content:''; position:absolute; inset:0; background:linear-gradient(to bottom,rgba(30,40,48,.9) 0%,transparent 100%); pointer-events:none; }
+  nav::before { content:''; position:absolute; inset:0; background:linear-gradient(to bottom,rgba(44,53,64,.9) 0%,transparent 100%); pointer-events:none; }
   .nav-logo { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:4px; color:var(--snow); text-decoration:none; position:relative; z-index:1; margin-right:auto; }
   .nav-links { display:flex; gap:32px; list-style:none; position:relative; z-index:1; }
   .nav-links a { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:rgba(245,243,239,.75); text-decoration:none; transition:color .3s; }
   .nav-links a:hover { color:var(--snow); }
-  .nav-cta { position:relative; z-index:1; font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:3px; color:var(--ink); background:var(--yellow); padding:10px 22px; text-decoration:none; transition:all .3s; }
-  .nav-cta:hover { background:var(--yellow-dark); }
+  .nav-cta { position:relative; z-index:1; font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:3px; color:var(--snow); border:1px solid rgba(245,243,239,.35); padding:10px 22px; text-decoration:none; transition:all .3s; }
+  .nav-cta:hover { background:var(--brand); border-color:var(--brand); }
 
   /* HERO */
   .hero { position:relative; height:92vh; min-height:640px; display:flex; align-items:flex-end; overflow:hidden; }
-  .hero-bg { position:absolute; inset:0; background-image:url('https://www.iski.com.tw/image/catalog/camp/camp_phil.jpg?_t=1694482798'); background-size:cover; background-position:center 30%; transform-origin:center; animation:heroBgEntry 1.4s ease forwards; }
-  @media(max-width:768px){ .hero-bg { background-position:center 20%; } }
-  .hero-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(160deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.2) 50%,transparent 75%),linear-gradient(to bottom,rgba(10,14,18,.6) 0%,rgba(10,14,18,.05) 40%,rgba(10,14,18,.92) 100%); }
+  .hero-collage { position:absolute; inset:0; display:grid; grid-template-columns:1.15fr 1fr; grid-template-rows:1fr 1fr; gap:3px; }
+  .hero-collage-cell { overflow:hidden; position:relative; }
+  .hero-collage-cell-inner { position:absolute; inset:0; background-size:cover; background-position:center; transform:scale(1.08); animation:collageEntry 1.6s cubic-bezier(.22,.61,.36,1) forwards; }
+  .hero-collage-cell:nth-child(1) { grid-row:1/3; }
+  .hero-collage-cell:nth-child(1) .hero-collage-cell-inner { background-image:url('https://www.iski.com.tw/image/catalog/camp/IMG_0065.JPG?_t=1694588869'); background-position:center 30%; animation-delay:.0s; }
+  .hero-collage-cell:nth-child(2) .hero-collage-cell-inner { background-image:url('https://www.iski.com.tw/image/catalog/camp/%E6%A1%8C%E9%9D%A2%E7%85%A73.jpg?_t=1781247832'); background-position:center 20%; animation-delay:.15s; }
+  .hero-collage-cell:nth-child(3) .hero-collage-cell-inner { background-image:url('https://www.iski.com.tw/image/catalog/camp/camp_rusty-17-17.webp?_t=1764754297'); background-position:center 25%; animation-delay:.3s; }
+  @keyframes collageEntry { 0%{transform:scale(1.08) translateX(18px);filter:blur(14px);opacity:0} 35%{opacity:1} 70%{filter:blur(0)} 100%{transform:scale(1) translateX(0);filter:blur(0)} }
+  .hero-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(160deg,rgba(0,0,0,.75) 0%,rgba(0,0,0,.25) 45%,transparent 70%),linear-gradient(to bottom,rgba(10,14,18,.55) 0%,rgba(10,14,18,.0) 35%,rgba(10,14,18,.95) 100%); }
+  @media(max-width:768px){
+    .hero-collage { grid-template-columns:1fr; grid-template-rows:1fr; }
+    .hero-collage-cell:nth-child(1) { grid-row:1; }
+    .hero-collage-cell:nth-child(2),.hero-collage-cell:nth-child(3) { display:none; }
+  }
   .hero-content { position:relative; z-index:2; padding:0 60px 80px; width:100%; max-width:1300px; margin:0 auto; }
   .hero-season-label { font-family:'Bebas Neue',sans-serif; font-size:12px; font-weight:400; letter-spacing:6px; color:rgba(245,243,239,.4); margin-bottom:20px; display:flex; align-items:center; gap:16px; animation:fadeUp 1s ease .2s both; }
   .hero-season-label::before { content:''; width:40px; height:1px; background:rgba(245,243,239,.3); }
   .hero-eyebrow { font-family:'Shippori Mincho',serif; font-size:clamp(13px,1.4vw,16px); letter-spacing:5px; color:var(--ice); margin-bottom:16px; animation:fadeUp 1s ease .35s both; display:block; }
-  .hero-title-main { font-family:'Bebas Neue',sans-serif; font-size:clamp(68px,10vw,148px); font-weight:400; line-height:.92; letter-spacing:4px; color:#ffffff; animation:fadeUp 1s ease .4s both; display:block; }
+  .hero-title-main { font-family:'Bebas Neue',sans-serif; font-size:clamp(68px,10vw,148px); font-weight:400; line-height:.92; letter-spacing:4px; color:#ffffff; animation:shotIn .9s cubic-bezier(.16,1,.3,1) .45s both; display:block; }
+  @keyframes shotIn { 0%{opacity:0;transform:translateX(-32px);filter:blur(10px)} 60%{filter:blur(0)} 100%{opacity:1;transform:translateX(0);filter:blur(0)} }
   .hero-title-sub { font-family:'Noto Sans TC',sans-serif; font-size:clamp(20px,2.8vw,36px); font-weight:700; line-height:1.3; letter-spacing:6px; color:rgba(245,243,239,.82); margin-top:18px; margin-bottom:32px; animation:fadeUp 1s ease .52s both; display:block; }
   .hero-tags { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px; animation:fadeUp 1s ease .6s both; }
   .hero-tag { font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:3px; color:var(--ice); border:1px solid rgba(200,218,234,.35); padding:6px 14px; }
@@ -84,7 +96,9 @@
   .scroll-hint span { font-size:9px; letter-spacing:3px; color:rgba(245,243,239,.45); writing-mode:vertical-rl; text-transform:uppercase; }
   .scroll-line { width:1px; height:60px; background:linear-gradient(to bottom,rgba(245,243,239,.28),transparent); animation:scrollPulse 2s ease infinite; }
   @keyframes scrollPulse { 0%,100%{opacity:.28;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(.6)} }
-  @keyframes heroBgEntry { 0%{transform:scale(1.0);filter:blur(6px)} 60%{filter:blur(0px)} 100%{transform:scale(1.08);filter:blur(0px)} }
+  @keyframes curtainFade { 0%{opacity:1} 100%{opacity:0;pointer-events:none} }
+  #hero-curtain { position:fixed;inset:0;background:#000;z-index:200;animation:curtainFade .9s ease .25s forwards; pointer-events:none; }
+
 
   /* MARQUEE */
   .marquee-wrap { overflow:hidden; border-top:1px solid rgba(245,243,239,.06); border-bottom:1px solid rgba(245,243,239,.06); padding:18px 0; background:var(--ink-mid); }
@@ -130,8 +144,8 @@
   .schedule-table td { padding:20px 20px; border-bottom:1px solid rgba(245,243,239,.06); font-size:15px; color:rgba(245,243,239,.82); vertical-align:middle; }
   .schedule-table tr:hover td { background:rgba(245,243,239,.02); }
   .schedule-resort { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:2px; color:var(--snow); }
-  .badge-sb { background:rgba(200,218,234,.15); border:1px solid rgba(200,218,234,.3); color:var(--ice); font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:2px; padding:4px 10px; }
-  .badge-sk { background:rgba(212,245,60,.1); border:1px solid rgba(212,245,60,.3); color:var(--yellow); font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:2px; padding:4px 10px; }
+  .badge-sb { background:rgba(200,218,234,.15); border:1px solid rgba(200,218,234,.3); color:var(--ice); font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:2px; padding:4px 10px; white-space:nowrap; }
+  .badge-sk { background:rgba(212,245,60,.1); border:1px solid rgba(212,245,60,.3); color:var(--yellow); font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:2px; padding:4px 10px; white-space:nowrap; }
   .price-member { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:1px; color:var(--snow); }
   .price-member span { font-size:12px; letter-spacing:1px; color:rgba(245,243,239,.45); font-family:'Noto Sans TC',sans-serif; margin-left:4px; }
   .price-nonmember { font-size:13px; color:rgba(245,243,239,.4); margin-top:4px; }
@@ -178,6 +192,21 @@
   .session-price-nonmember { font-size:13px; color:rgba(245,243,239,.38); margin-top:6px; letter-spacing:.5px; }
   .session-early { margin-top:12px; display:inline-flex; align-items:center; gap:6px; background:rgba(212,245,60,.12); border:1px solid rgba(212,245,60,.25); color:var(--yellow); font-size:11px; letter-spacing:2px; padding:5px 12px; font-family:'Bebas Neue',sans-serif; }
 
+  /* COACH CAROUSEL */
+  .coach-carousel-wrap { position:relative; }
+  .coach-carousel-stage { display:flex; align-items:flex-end; justify-content:flex-start; gap:16px; padding:24px 0 32px; overflow-x:auto; scroll-behavior:smooth; -webkit-overflow-scrolling:touch; scrollbar-width:none; }  
+  .coach-carousel-stage::-webkit-scrollbar { display:none; }
+  .coach-carousel-item { transition:transform .4s ease, opacity .4s ease; transform:scale(0.82); opacity:0.38; flex-shrink:0; width:200px; cursor:pointer; }
+  .coach-carousel-item.active { transform:scale(1); opacity:1; }
+  .coach-carousel-controls { display:flex; align-items:center; justify-content:center; gap:24px; margin-top:4px; }
+  .coach-carousel-btn { background:none; border:1px solid rgba(245,243,239,.25); color:var(--snow); font-size:24px; width:40px; height:40px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:border-color .3s, color .3s; line-height:1; padding:0; }
+  .coach-carousel-btn:hover { border-color:rgba(245,243,239,.7); color:var(--yellow); }
+  .coach-carousel-count { font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:3px; color:rgba(245,243,239,.45); min-width:40px; text-align:center; }
+  @media(max-width:768px){
+    .coach-carousel-stage { gap:8px; }
+    .coach-carousel-item { width:64vw; }
+  }
+
   /* COACH CARDS — 直式 */
   .coach-cards { display:flex; gap:12px; margin-bottom:16px; }
   .coach-card { background:var(--ink); border:1px solid rgba(245,243,239,.08); flex:1; min-width:180px; max-width:240px; transition:border-color .3s; overflow:hidden; flex-shrink:0; }
@@ -189,9 +218,8 @@
   .coach-ig { font-size:11px; color:rgba(200,218,234,.6); letter-spacing:.4px; margin-top:6px; text-decoration:none; transition:color .2s; display:block; }
   .coach-ig:hover { color:var(--ice); }
   @media(max-width:768px){
-    .coach-cards { overflow-x:auto; -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory; padding-right:20%; gap:10px; }
-    .coach-cards::-webkit-scrollbar { display:none; }
-    .coach-card { min-width:68vw; max-width:68vw; scroll-snap-align:start; flex-shrink:0; }
+    .coach-cards { overflow:visible !important; flex-wrap:nowrap !important; gap:0 !important; margin-bottom:32px; }
+    .coach-card { flex:none !important; min-width:0 !important; max-width:none !important; }
   }
   .coach-badge-row { display:flex; flex-wrap:wrap; gap:8px; }
   .coach-badge { font-size:13px; color:rgba(245,243,239,.52); background:rgba(245,243,239,.05); border:1px solid rgba(245,243,239,.1); padding:7px 16px; letter-spacing:.5px; }
@@ -215,6 +243,25 @@
   .rule-desc { font-size:14px; color:rgba(245,243,239,.58); line-height:2; letter-spacing:.3px; }
   .rule-desc strong { color:rgba(245,243,239,.85); }
 
+  /* SELECT SECTION */
+  .section-select { padding:0 60px 120px; max-width:1300px; margin:0 auto; }
+  .select-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px; margin-top:0; }
+  .select-card { background:#ffffff; border:1px solid rgba(0,53,142,.1); overflow:hidden; }
+  .select-card-img { height:280px; background-size:cover; background-position:center; transition:transform .8s ease; }
+  .select-card:hover .select-card-img { transform:scale(1.04); }
+  .select-card-body { padding:36px 40px; }
+  .select-tag { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--brand); display:block; margin-bottom:14px; opacity:.75; }
+  .select-title { font-family:'Shippori Mincho',serif; font-size:26px; font-weight:700; color:#1a1e26; margin-bottom:16px; letter-spacing:2px; }
+  .select-desc { font-size:14px; font-weight:400; color:rgba(44,53,64,.72); line-height:2; margin-bottom:24px; letter-spacing:.5px; }
+  .select-link { font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:3px; color:var(--brand); text-decoration:none; transition:color .3s, letter-spacing .3s; display:inline-block; }
+  .select-link:hover { color:var(--charcoal); letter-spacing:4px; }
+  .section-select .section-eyebrow { color:var(--brand); }
+  .section-select .section-eyebrow::before { background:var(--brand); }
+  .section-select .section-heading { color:#1a1e26; }
+  .section-select .section-heading-jp { color:rgba(44,53,64,.45); }
+  .section-select .select-card:hover { box-shadow:0 4px 32px rgba(0,53,142,.1); border-color:rgba(0,53,142,.25); }
+  @media(max-width:768px){ .section-select { padding-left:24px; padding-right:24px; padding-bottom:80px; } .select-grid { grid-template-columns:1fr; } .select-card-body { padding:20px 20px !important; } .select-title { font-size:18px !important; } .select-tag { font-size:9px !important; letter-spacing:1.5px !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .select-desc { font-size:13px !important; } }
+
   /* CTA SECTION */
   .cta-section { position:relative; overflow:hidden; }
   .cta-bg { position:absolute; inset:0; background-image:url('https://www.iski.com.tw/image/catalog/camp/top_group_pic.webp'); background-size:cover; background-position:center; }
@@ -232,10 +279,16 @@
 
   /* FOOTER */
   footer { border-top:1px solid rgba(245,243,239,.07); padding:40px 60px; display:flex; justify-content:space-between; align-items:center; background:var(--ink); }
-  .footer-logo img { height:22px; width:auto; display:block; opacity:.55; }
-  .footer-social { display:flex; gap:16px; align-items:center; }
+  .footer-logo { font-family:'Bebas Neue',sans-serif; font-size:19px; letter-spacing:4px; color:rgba(245,243,239,.55); }
+  .footer-links { display:flex; gap:24px; list-style:none; }
+  .footer-links a { font-size:10px; letter-spacing:2px; color:rgba(245,243,239,.65); text-decoration:none; transition:color .3s; }
+  .footer-links a:hover { color:rgba(245,243,239,.85); }
+  .footer-copy { font-size:10px; letter-spacing:1px; color:rgba(245,243,239,.38); }
+  .footer-social { display:flex; gap:16px; align-items:center; justify-content:center; flex-wrap:nowrap; }
   .footer-social-link { display:flex; align-items:center; gap:7px; font-size:12px; letter-spacing:1px; color:rgba(245,243,239,.45); text-decoration:none; transition:color .3s; }
   .footer-social-link:hover { color:rgba(245,243,239,.85); }
+  .footer-social-link svg { flex-shrink:0; opacity:.6; transition:opacity .3s; }
+  .footer-social-link:hover svg { opacity:1; }
   .footer-divider { width:1px; height:14px; background:rgba(245,243,239,.12); }
 
   /* FLOATING */
@@ -246,13 +299,12 @@
   .floating-messenger.fm-collapsed .fm-text { max-width:0; opacity:0; }
 
   /* HAMBURGER */
-  .hamburger-btn { display:none; position:relative; z-index:1; background:none; border:none; cursor:pointer; padding:4px; flex-direction:column; gap:5px; }
+  .hamburger-btn { display:flex; position:relative; z-index:1; background:none; border:none; cursor:pointer; padding:4px; flex-direction:column; gap:5px; }
   .hamburger-btn span { display:block; width:22px; height:1.5px; background:var(--snow); transition:all .3s; }
   .hamburger-btn.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
   .hamburger-btn.open span:nth-child(2) { opacity:0; }
   .hamburger-btn.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
-  .mobile-menu { display:none; position:fixed; top:0; right:0; bottom:0; width:100%; z-index:99; background:rgba(26,28,30,.97); backdrop-filter:blur(12px); flex-direction:column; padding:100px 32px 48px; gap:0; overflow-y:auto; transform:translateX(100%); transition:transform .35s ease; }
-  @media(min-width:481px){ .mobile-menu { width:min(33vw, 320px); } }
+  .mobile-menu { display:none; position:fixed; top:0; right:0; bottom:0; width:100%; z-index:99; background:rgba(26,28,30,.97); backdrop-filter:blur(12px); flex-direction:column; padding:100px 32px 48px; gap:0; overflow-y:auto; transform:translateX(100%); transition:transform .35s ease; } @media(min-width:481px){ .mobile-menu { width:min(33vw, 320px); } }
   .mobile-menu.open { display:flex; transform:translateX(0); }
   .mobile-menu-section { border-bottom:1px solid rgba(245,243,239,.08); padding:20px 0; }
   .mobile-menu-label { font-size:12px; letter-spacing:3px; color:var(--yellow); text-transform:uppercase; margin-bottom:12px; }
@@ -272,8 +324,7 @@
   /* MOBILE */
   @media(max-width:768px){
     nav { top:36px; padding:20px 24px; }
-    .nav-links { display:none; }
-    .nav-cta { display:none; }
+    .nav-links,.nav-cta { display:none; }
     .hamburger-btn { display:flex; }
 
     .hero { height:90vh; }
@@ -298,13 +349,27 @@
     .rule-row { padding:24px 20px; }
     .threshold-wrap { grid-template-columns:1fr; }
     .cta-inner { padding:80px 24px; }
-    .cta-steps { flex-direction:column; align-items:center; }
-    footer { flex-direction:column; gap:24px; text-align:center; }
+    .cta-steps { flex-direction:column; align-items:stretch; width:100%; max-width:340px; margin-left:auto; margin-right:auto; }
+    .cta-step { flex-direction:column; }
+    .cta-step-item { text-align:center; width:100%; }
+    .cta-step-arrow { display:none; }
+    footer { flex-direction:column; gap:24px; text-align:center; } .footer-social { width:100%; justify-content:center; gap:12px; flex-wrap:nowrap; } .footer-social-link { font-size:11px; letter-spacing:.5px; }
+    .footer-links { display:none; }
+    .footer-social { justify-content:center; }
     .schedule-table { font-size:13px; }
     .schedule-table th, .schedule-table td { padding:14px 12px; }
     .rules-wrap { padding:64px 24px; }
+    .countdown-bar-label { font-size:11px; }
+    .resort-meta-label { font-size:12px; }
+    .session-price-label { font-size:12px; }
+    .early-badge { font-size:12px; }
+    .badge-sb, .badge-sk { font-size:12px; }
+    .section-eyebrow { font-size:13px; }
+    .hero-tag { font-size:13px; }
+    .coach-certs { font-size:13px; }
+    .coach-ig { font-size:12px; }
   }
-  @media(max-width:768px){ .resort-notes-grid { grid-template-columns:1fr !important; } #section-resorts { padding:64px 24px !important; } #section-coaches > div { padding:64px 24px !important; } }
+  @media(max-width:768px){ .resort-notes-grid { grid-template-columns:1fr !important; } #section-resorts > div { padding:64px 24px !important; } #section-coaches > div { padding:64px 24px !important; } }
 </style>
 </head>
 <body>
@@ -328,29 +393,49 @@
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
+  <a href="index.php?route=account/login" class="mobile-menu-link">會員中心</a>
   <div class="mobile-menu-section">
-    <p class="mobile-menu-label">課程資訊</p>
-    <a href="javascript:void(0)" onclick="document.getElementById('section-coaches').scrollIntoView({behavior:'smooth'});toggleMobileMenu();" class="mobile-menu-link">師資陣容</a>
-    <a href="javascript:void(0)" onclick="document.getElementById('section-schedule').scrollIntoView({behavior:'smooth'});toggleMobileMenu();" class="mobile-menu-link">梯次總覽</a>
-    <a href="javascript:void(0)" onclick="document.getElementById('section-rules').scrollIntoView({behavior:'smooth'});toggleMobileMenu();" class="mobile-menu-link">開班規則</a>
+    <p class="mobile-menu-label">雪上課程</p>
+    <a href="index.php?route=common/snowing_yuzawa&category=group" class="mobile-menu-link">越後湯澤 團體課</a>
+    <a href="index.php?route=common/snowing_hokkaido&category=teine_private" class="mobile-menu-link">手稻 私人課</a>
+    <a href="index.php?route=common/snowing_hokkaido&category=rusutsu_private" class="mobile-menu-link">留壽都 私人課</a>
+    <a href="index.php?route=common/snowing_zao&category=private" class="mobile-menu-link">藏王 私人課</a>
   </div>
-  <a href="https://forms.gle/oHQAqRzBgiiGUZaD7" target="_blank" class="mobile-menu-cta">意願登記 → 報名</a>
+  <div class="mobile-menu-section">
+    <p class="mobile-menu-label">雪場介紹</p>
+    <a href="index.php?route=common/snowing_yuzawa&category=info" class="mobile-menu-link">越後湯澤</a>
+    <a href="index.php?route=common/snowing_hokkaido&category=teine" class="mobile-menu-link">北海道手稻</a>
+    <a href="index.php?route=common/snowing_hokkaido&category=rusutsu" class="mobile-menu-link">北海道留壽都</a>
+    <a href="index.php?route=common/snowing_zao" class="mobile-menu-link">東北藏王</a>
+  </div>
+  <div class="mobile-menu-section">
+    <p class="mobile-menu-label">服務</p>
+    <a href="https://www.iski-select.com.tw/pages/rental" target="_blank" class="mobile-menu-link">日本雪具租借&amp;倉儲</a>
+    <a href="/" class="mobile-menu-link">iSKI首頁</a>
+  </div>
+  <a href="index.php?route=common/snowing_buy" class="mobile-menu-cta" target="_blank">立即報名 團體課程 →</a>
 </div>
 
 <!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo">
-    <img src="https://stage.iski.com.tw/image/catalog/snowing/01.home/link/M/M_Website_home logo01.png" alt="iSKI" style="height:28px;width:auto;display:block;">
-  </a>
-  <a href="https://forms.gle/oHQAqRzBgiiGUZaD7" target="_blank" class="nav-cta">意願登記 → 報名</a>
-  <button class="hamburger-btn" id="hamburgerBtn" aria-label="選單" onclick="toggleMobileMenu()">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="/" class="nav-logo" target="_blank"><img src="https://stage.iski.com.tw/image/catalog/snowing/01.home/link/M/M_Website_home logo01.png" alt="iSKI" style="height:28px;width:auto;display:block;"></a>
+  <div style="display:flex;align-items:center;gap:12px;position:relative;z-index:1;">
+    <a href="https://forms.gle/oHQAqRzBgiiGUZaD7" target="_blank" class="nav-cta">意願登記 → 報名</a>
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="選單" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+
+<div id="hero-curtain"></div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-collage">
+    <div class="hero-collage-cell"><div class="hero-collage-cell-inner"></div></div>
+    <div class="hero-collage-cell"><div class="hero-collage-cell-inner"></div></div>
+    <div class="hero-collage-cell"><div class="hero-collage-cell-inner"></div></div>
+  </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-season-label">26 / 27 SEASON · ADVANCED CAMP</p>
@@ -367,10 +452,6 @@
       <a href="javascript:void(0)" onclick="document.getElementById('section-schedule').scrollIntoView({behavior:'smooth'})" class="btn-ghost">查看梯次 &amp; 費用</a>
     </div>
     <p style="font-family:'Noto Sans TC',sans-serif;font-size:15px;color:#ffffff;letter-spacing:3px;margin-top:16px;animation:fadeUp 1s ease .85s both;">全台iSKI與高雄Easyski 門市皆可購課</p>
-  </div>
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-    <span>scroll</span>
   </div>
 </section>
 
@@ -408,7 +489,7 @@
   <div class="section-wrap">
     <p class="section-eyebrow reveal">Advanced Camp · 26/27</p>
     <h2 class="section-heading reveal reveal-delay-1">高階技術<br>特訓營</h2>
-    <p class="section-heading-jp reveal reveal-delay-2">アドバンスキャンプ</p>
+    <p class="section-heading-jp reveal reveal-delay-2">アドバンスドキャンプ</p>
     <div class="intro-grid">
       <div class="intro-card reveal">
         <span class="intro-card-num">01</span>
@@ -524,46 +605,65 @@
     <p style="font-size:14px;color:rgba(245,243,239,.52);letter-spacing:1px;line-height:2;margin-bottom:48px;" class="reveal reveal-delay-3">由 <strong style="color:var(--ice);">Level 4 滿級 &amp; Level 3 高級指導員</strong>帶領。實際教練依梯次人數與程度動態分配，無法指定教練。</p>
 
     <!-- 有照片的教練 -->
-    <div class="coach-cards reveal" style="margin-bottom:32px;flex-wrap:wrap;">
-      <div class="coach-card">
-        <img src="https://www.iski.com.tw/image/catalog/camp/phil.webp" alt="Phil 教練" class="coach-photo">
-        <div class="coach-info">
-          <div class="coach-name">Phil</div>
-          <div class="coach-certs">台灣首位 APSI Level 4 教練</div>
-          <a href="https://www.instagram.com/philskitw/" target="_blank" class="coach-ig">@philskitw</a>
+    <!-- Coach Carousel -->
+    <div class="coach-carousel-wrap reveal" style="margin-bottom:32px;">
+      <div class="coach-carousel-stage" id="coachStage">
+        <div class="coach-carousel-item" data-index="0">
+          <div class="coach-card">
+            <img src="https://www.iski.com.tw/image/catalog/camp/phil.webp" alt="Phil 教練" class="coach-photo">
+            <div class="coach-info">
+              <div class="coach-name">Phil</div>
+              <div class="coach-certs">台灣首位 APSI Level 4 教練</div>
+              <a href="https://www.instagram.com/philskitw/" target="_blank" class="coach-ig">@philskitw</a>
+            </div>
+          </div>
+        </div>
+        <div class="coach-carousel-item" data-index="1">
+          <div class="coach-card">
+            <img src="https://www.iski.com.tw/image/catalog/camp/omn5o-g28yj.webp" alt="Rusty 教練" class="coach-photo">
+            <div class="coach-info">
+              <div class="coach-name">Rusty</div>
+              <div class="coach-certs">台灣首位 CASI Level 2 考官</div>
+              <a href="https://www.instagram.com/ridehardcoach_rusty/" target="_blank" class="coach-ig">@ridehardcoach_rusty</a>
+            </div>
+          </div>
+        </div>
+        <div class="coach-carousel-item" data-index="2">
+          <div class="coach-card">
+            <img src="https://www.iski.com.tw/image/catalog/camp/ndhef-2g617.webp" alt="Ernest 教練" class="coach-photo">
+            <div class="coach-info">
+              <div class="coach-name">Ernest</div>
+              <div class="coach-certs">CASI Level 3 · APSI Level 3</div>
+              <a href="https://www.instagram.com/ernestyhl/" target="_blank" class="coach-ig">@ernestyhl</a>
+            </div>
+          </div>
+        </div>
+        <div class="coach-carousel-item" data-index="3">
+          <div class="coach-card">
+            <img src="https://www.iski.com.tw/image/catalog/camp/wawa.webp" alt="Wawa 教練" class="coach-photo">
+            <div class="coach-info">
+              <div class="coach-name">Wawa</div>
+              <div class="coach-certs">APSI Level 3</div>
+              <a href="https://www.instagram.com/kaorujane/" target="_blank" class="coach-ig">@kaorujane</a>
+            </div>
+          </div>
+        </div>
+        <div class="coach-carousel-item" data-index="4">
+          <div class="coach-card">
+            <img src="https://www.iski.com.tw/image/catalog/camp/taylor.jpg" alt="Taylor 教練" class="coach-photo">
+            <div class="coach-info">
+              <div class="coach-name">Taylor</div>
+              <div class="coach-certs">CSIA Level 3 · iSKI 雙板訓練官</div>
+              <a href="https://www.instagram.com/zxcv82930/" target="_blank" class="coach-ig">@zxcv82930</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="coach-card">
-        <img src="https://www.iski.com.tw/image/catalog/camp/omn5o-g28yj.webp" alt="Rusty 教練" class="coach-photo">
-        <div class="coach-info">
-          <div class="coach-name">Rusty</div>
-          <div class="coach-certs">台灣首位 CASI Level 2 考官</div>
-          <a href="https://www.instagram.com/ridehardcoach_rusty/" target="_blank" class="coach-ig">@ridehardcoach_rusty</a>
-        </div>
-      </div>
-      <div class="coach-card">
-        <img src="https://www.iski.com.tw/image/catalog/camp/ndhef-2g617.webp" alt="Ernest 教練" class="coach-photo">
-        <div class="coach-info">
-          <div class="coach-name">Ernest</div>
-          <div class="coach-certs">CASI Level 3 · APSI Level 3</div>
-          <a href="https://www.instagram.com/ernestyhl/" target="_blank" class="coach-ig">@ernestyhl</a>
-        </div>
-      </div>
-      <div class="coach-card">
-        <img src="https://www.iski.com.tw/image/catalog/camp/wawa.webp" alt="Wawa 教練" class="coach-photo">
-        <div class="coach-info">
-          <div class="coach-name">Wawa</div>
-          <div class="coach-certs">APSI Level 3</div>
-          <a href="https://www.instagram.com/kaorujane/" target="_blank" class="coach-ig">@kaorujane</a>
-        </div>
-      </div>
-      <div class="coach-card">
-        <img src="https://www.iski.com.tw/image/catalog/camp/taylor.jpg" alt="Taylor 教練" class="coach-photo">
-        <div class="coach-info">
-          <div class="coach-name">Taylor</div>
-          <div class="coach-certs">CSIA Level 3 · iSKI 雙板訓練官</div>
-          <a href="https://www.instagram.com/zxcv82930/" target="_blank" class="coach-ig">@zxcv82930</a>
-        </div>
+      <!-- 控制按鈕 -->
+      <div class="coach-carousel-controls">
+        <button class="coach-carousel-btn" id="coachPrev" aria-label="上一位">‹</button>
+        <span class="coach-carousel-count" id="coachCount">1 / 5</span>
+        <button class="coach-carousel-btn" id="coachNext" aria-label="下一位">›</button>
       </div>
     </div>
 
@@ -590,7 +690,7 @@
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-top:48px;" class="reveal resort-notes-grid">
 
       <!-- 留壽都 -->
-      <a href="https://www.iski.com.tw/index.php?route=common/snowing_hokkaido&category=rusutsu" target="_blank" style="text-decoration:none;display:block;background:var(--ink-mid);border:1px solid rgba(245,243,239,.08);overflow:hidden;transition:border-color .3s;" onmouseover="this.style.borderColor='rgba(245,243,239,.25)'" onmouseout="this.style.borderColor='rgba(245,243,239,.08)'">
+      <a href="https://www.iski.com.tw/index.php?route=common/snowing_hokkaido&category=rusutsu" target="_blank" style="text-decoration:none;display:block;background:var(--ink-mid);border:1px solid rgba(245,243,239,.08);overflow:hidden;transition:border-color .3s;" onmouseover="this.style.borderColor='rgba(0,53,142,.6)'" onmouseout="this.style.borderColor='rgba(245,243,239,.08)'">
         <div style="position:relative;height:200px;overflow:hidden;">
           <img src="https://blog2.hisway306.jp/wp-content/uploads/2020/02/P1260180.jpg" alt="留壽都" style="width:100%;height:100%;object-fit:cover;object-position:center 75%;transition:transform .6s ease;">
           <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(30,40,48,.7) 100%);"></div>
@@ -606,7 +706,7 @@
       </a>
 
       <!-- 藏王 -->
-      <a href="https://www.iski.com.tw/index.php?route=common/snowing_zao" target="_blank" style="text-decoration:none;display:block;background:var(--ink-mid);border:1px solid rgba(245,243,239,.08);overflow:hidden;transition:border-color .3s;" onmouseover="this.style.borderColor='rgba(245,243,239,.25)'" onmouseout="this.style.borderColor='rgba(245,243,239,.08)'">
+      <a href="https://www.iski.com.tw/index.php?route=common/snowing_zao" target="_blank" style="text-decoration:none;display:block;background:var(--ink-mid);border:1px solid rgba(245,243,239,.08);overflow:hidden;transition:border-color .3s;" onmouseover="this.style.borderColor='rgba(0,53,142,.6)'" onmouseout="this.style.borderColor='rgba(245,243,239,.08)'">
         <div style="position:relative;height:200px;overflow:hidden;">
           <img src="https://www.japan-guide.com/g20/7927_01.jpg" alt="藏王" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;transition:transform .6s ease;">
           <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(30,40,48,.7) 100%);"></div>
@@ -622,7 +722,7 @@
       </a>
 
       <!-- 越後湯澤 -->
-      <a href="https://www.iski.com.tw/index.php?route=common/snowing_yuzawa&category=info" target="_blank" style="text-decoration:none;display:block;background:var(--ink-mid);border:1px solid rgba(245,243,239,.08);overflow:hidden;transition:border-color .3s;" onmouseover="this.style.borderColor='rgba(245,243,239,.25)'" onmouseout="this.style.borderColor='rgba(245,243,239,.08)'">
+      <a href="https://www.iski.com.tw/index.php?route=common/snowing_yuzawa&category=info" target="_blank" style="text-decoration:none;display:block;background:var(--ink-mid);border:1px solid rgba(245,243,239,.08);overflow:hidden;transition:border-color .3s;" onmouseover="this.style.borderColor='rgba(0,53,142,.6)'" onmouseout="this.style.borderColor='rgba(245,243,239,.08)'">
         <div style="position:relative;height:200px;overflow:hidden;">
           <img src="https://www.iski.com.tw/image/catalog/camp/Ishiuchi_Maruyama.jpg" alt="越後湯澤" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;transition:transform .6s ease;">
           <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(30,40,48,.7) 100%);"></div>
@@ -694,6 +794,50 @@
   </div>
 </section>
 
+<!-- 雪物嚴選 -->
+<section class="section-select" id="select" style="background:#ffffff;">
+  <div style="max-width:1300px;margin:0 auto;padding:100px 60px 0;">
+    <div class="reveal">
+      <p class="section-eyebrow">iSKI Select</p>
+      <h2 class="section-heading">雪物嚴選</h2>
+      <p class="section-heading-jp">日　本　ス　キ　ー　用　品　専　門　店</p>
+    </div>
+    <div class="select-grid reveal reveal-delay-1">
+
+      <!-- 租借 -->
+      <div class="select-card">
+        <div class="select-card-img" style="background-image:url('https://stage.iski.com.tw/image/catalog/snowing/01.home/link/M/M_Website_home09.jpg');"></div>
+        <div class="select-card-body">
+          <span class="select-tag">RENTAL · 雪具租借</span>
+          <h3 class="select-title">日本雪具租借</h3>
+          <p class="select-desc">
+            雪物嚴選在越後湯澤車站西口開設實體店！<br>
+            出站右轉步行 1 分鐘即達。<br>
+            單板・雙板全套雪具，快速取還，讓你的行程輕鬆愉快。
+          </p>
+          <a href="https://www.iski-select.com.tw/pages/rental" target="_blank" class="select-link">了解租借方案 →</a>
+        </div>
+      </div>
+
+      <!-- 倉儲 -->
+      <div class="select-card">
+        <div class="select-card-img" style="background-image:url('https://stage.iski.com.tw/image/catalog/snowing/01.home/link/M/M_Website_home10.jpg');"></div>
+        <div class="select-card-body">
+          <span class="select-tag">STORAGE · 雪具倉儲</span>
+          <h3 class="select-title">日本雪具倉儲</h3>
+          <p class="select-desc">
+            滑雪季結束後，雪具直接存放在日本。<br>
+            下個雪季安排好住宿，預約寄送到指定旅館——<br>
+            讓心愛的雪具與你的旅程無縫接軌。
+          </p>
+          <a href="https://www.iski-select.com.tw/pages/storage" target="_blank" class="select-link">了解倉儲服務 →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section">
   <div class="cta-bg"></div>
@@ -724,22 +868,23 @@
 
 <!-- FOOTER -->
 <footer>
-  <span class="footer-logo"><a href="/"><img src="https://stage.iski.com.tw/image/catalog/snowing/01.home/link/M/M_Website_home logo01.png" alt="iSKI"></a></span>
+  <span class="footer-logo"><a href="/" style="display:block;"><img src="https://stage.iski.com.tw/image/catalog/snowing/01.home/link/M/M_Website_home logo01.png" alt="iSKI" style="height:22px;width:auto;display:block;opacity:0.55;"></a></span>
   <div class="footer-social">
-    <a href="https://www.facebook.com/iSKIclub2019/" class="footer-social-link" target="_blank">
+    <a href="https://www.facebook.com/iSKIclub2019/" class="footer-social-link" target="_blank" title="iSKI粉絲頁">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
       iSKI粉絲頁
     </a>
     <span class="footer-divider"></span>
-    <a href="https://www.facebook.com/groups/universnow" class="footer-social-link" target="_blank">
+    <a href="https://www.facebook.com/groups/universnow" class="footer-social-link" target="_blank" title="滑雪宇宙">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
       滑雪宇宙
     </a>
     <span class="footer-divider"></span>
-    <a href="https://www.instagram.com/iskiclub/" class="footer-social-link" target="_blank">
+    <a href="https://www.instagram.com/iskiclub/" class="footer-social-link" target="_blank" title="iSKI IG">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
       iSKI IG
     </a>
+    <span class="footer-divider"></span>
   </div>
 </footer>
 
@@ -854,6 +999,44 @@ window.addEventListener('scroll', () => {
   if(window.scrollY > 300 && !fmCollapsed){ fm.classList.add('fm-collapsed'); fmCollapsed = true; }
   else if(window.scrollY <= 300 && fmCollapsed){ fm.classList.remove('fm-collapsed'); fmCollapsed = false; }
 });
+
+// Coach Carousel
+(function(){
+  const items = document.querySelectorAll('.coach-carousel-item');
+  const countEl = document.getElementById('coachCount');
+  const prevBtn = document.getElementById('coachPrev');
+  const nextBtn = document.getElementById('coachNext');
+  if(!items.length || !prevBtn) return;
+  let current = 0;
+  const total = items.length;
+
+  function goTo(idx){
+    items[current].classList.remove('active');
+    current = (idx + total) % total;
+    items[current].classList.add('active');
+    if(countEl) countEl.textContent = (current+1) + ' / ' + total;
+    // 把 active 卡片滾到 stage 中央
+    const stage = document.getElementById('coachStage');
+    const activeItem = items[current];
+    if(stage && activeItem){
+      const stageW = stage.offsetWidth;
+      const itemLeft = activeItem.offsetLeft;
+      const itemW = activeItem.offsetWidth;
+      stage.scrollLeft = itemLeft - (stageW / 2) + (itemW / 2);
+    }
+  }
+
+  // init
+  items[0].classList.add('active');
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  // 點擊非 active 卡片也可切換
+  items.forEach((item, i) => {
+    item.addEventListener('click', () => { if(i !== current) goTo(i); });
+  });
+})();
 </script>
 </body>
 </html>
